@@ -1,5 +1,7 @@
 # airline-reservation
 
+## Domain description
+
 - Make an airline reservation system.
 
 - As a customer, I can make a ticket reservation to travel from Paris to New York (these are examples of two cities). We are assuming that there's a direct flight from one city to the other.
@@ -17,3 +19,9 @@
 - BONUS: Mutation Testing: Include pitest (if Java) or Stryker (if .NET)
 
 - Evaluation criteria: When viewing your projects, I will evaluate the following: (1) Your solution design - clean design, clean code, (3) running SonarLint, (4) Running unit tests with code coverage and mutation testing
+
+## Tools
+
+### Pitest
+Mutation testing tool. To run an analysis, the command is : 
+`mvn test-compile org.pitest:pitest-maven:mutationCoverage`
