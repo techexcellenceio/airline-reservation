@@ -24,8 +24,8 @@ class ReserveTicketUseCaseTest {
 		ReservedTicket reservedTicket = reserveTicketUseCase.reserveTicket("aCustomer", "Paris", "New York");
 
 		assertThat(reservedTicket).isNotNull();
-		assertThat(reservedTicket.getFrom()).isEqualTo(City.of("Paris"));
-		assertThat(reservedTicket.getTo()).isEqualTo(City.of("New York"));
+		assertThat(reservedTicket.getFrom()).isEqualTo(City.PARIS);
+		assertThat(reservedTicket.getTo()).isEqualTo(City.NEW_YORK);
 	}
 
 	@Test
@@ -33,8 +33,8 @@ class ReserveTicketUseCaseTest {
 		ReservedTicket reservedTicket = reserveTicketUseCase.reserveTicket("aCustomer", "Berlin", "Prague");
 
 		assertThat(reservedTicket).isNotNull();
-		assertThat(reservedTicket.getFrom()).isEqualTo(City.of("Berlin"));
-		assertThat(reservedTicket.getTo()).isEqualTo(City.of("Prague"));
+		assertThat(reservedTicket.getFrom()).isEqualTo(City.BERLIN);
+		assertThat(reservedTicket.getTo()).isEqualTo(City.PRAGUE);
 	}
 
 	@Test

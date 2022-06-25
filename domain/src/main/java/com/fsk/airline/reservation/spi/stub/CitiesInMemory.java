@@ -9,10 +9,10 @@ import java.util.Optional;
 public class CitiesInMemory implements Cities {
 	
 	private final List<City> knownCities = List.of(
-			City.of("Paris"),
-			City.of("New York"),
-			City.of("Berlin"),
-			City.of("Prague")
+			City.PARIS,
+			City.NEW_YORK,
+			City.BERLIN,
+			City.PRAGUE
 	);
 	
 	@Override
@@ -29,22 +29,22 @@ public class CitiesInMemory implements Cities {
 		if (cityFrom.equals(cityTo)) {
 			return 0;
 		}
-		if(cityFrom.equals(City.of("Paris")) && cityTo.equals(City.of("New York"))) {
+		if(cityFrom.equals(City.PARIS) && cityTo.equals(City.NEW_YORK)) {
 			return 5837.20;
 		}
-		if(cityFrom.equals(City.of("Paris")) && cityTo.equals(City.of("Berlin"))) {
+		if(cityFrom.equals(City.PARIS) && cityTo.equals(City.BERLIN)) {
 			return 878.08;
 		}
-		if(cityFrom.equals(City.of("Paris")) && cityTo.equals(City.of("Prague"))) {
+		if(cityFrom.equals(City.PARIS) && cityTo.equals(City.PRAGUE)) {
 			return 881.77;
 		}
-		if(cityFrom.equals(City.of("New York")) && cityTo.equals(City.of("Berlin"))) {
+		if(cityFrom.equals(City.NEW_YORK) && cityTo.equals(City.BERLIN)) {
 			return 6385.28;
 		}
-		if(cityFrom.equals(City.of("New York")) && cityTo.equals(City.of("Prague"))) {
+		if(cityFrom.equals(City.NEW_YORK) && cityTo.equals(City.PRAGUE)) {
 			return 6570.78;
 		}
-		if(cityFrom.equals(City.of("Berlin")) && cityTo.equals(City.of("Prague"))) {
+		if(cityFrom.equals(City.BERLIN) && cityTo.equals(City.PRAGUE)) {
 			return 279.76;
 		}
 		throw new IllegalStateException("No Distance registered between cities " + cityFrom + " and " + cityTo);

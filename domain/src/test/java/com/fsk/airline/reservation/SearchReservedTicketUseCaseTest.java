@@ -63,8 +63,8 @@ class SearchReservedTicketUseCaseTest {
 		Optional<ReservedTicket> foundTicket = searchReservedTicketUseCase.findReservedTicket(CUSTOMER_LOGIN, ticketNumber);
 
 		assertThat(foundTicket).isPresent();
-		assertThat(foundTicket.get().getFrom()).isEqualTo(City.of("Paris"));
-		assertThat(foundTicket.get().getTo()).isEqualTo(City.of("New York"));
+		assertThat(foundTicket.get().getFrom()).isEqualTo(City.PARIS);
+		assertThat(foundTicket.get().getTo()).isEqualTo(City.NEW_YORK);
 	}
 
 	@ParameterizedTest

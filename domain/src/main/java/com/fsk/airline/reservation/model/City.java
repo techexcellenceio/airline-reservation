@@ -6,6 +6,11 @@ public class City {
 
 	private final String name;
 
+	public static final City PARIS = City.of("Paris");
+	public static final City BERLIN = City.of("Berlin");
+	public static final City NEW_YORK = City.of("New York");
+	public static final City PRAGUE = City.of("Prague");
+
 	private City(String name) {
 		checkCityNameIsNotEmpty(name);
 		this.name = name;
