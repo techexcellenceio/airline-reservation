@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import static java.lang.Math.*;
 
-public class FlightRoute {
+class FlightRoute {
 
 	private final City pointA;
 	private final City pointB;
