@@ -8,6 +8,9 @@ public class ReservedTicket {
 	private final City to;
 
 	public ReservedTicket(String customerLogin, City from, City to) {
+		if (from.equals(to)) {
+			throw new IllegalArgumentException("Departure and destination cities cannot be the same");
+		}
 		this.ticketNumber = TicketNumber.generate();
 		this.customerLogin = customerLogin;
 		this.from = from;
