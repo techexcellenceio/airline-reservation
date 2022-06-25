@@ -26,7 +26,7 @@ public class ReservationService implements ReserveTicketUseCase, SearchReservedT
 		City cityFrom = findCity(request.getCityFrom());
 		City cityTo = findCity(request.getCityTo());
 
-		ReservedTicket reservedTicket = new ReservedTicket(request.getCustomerLogin(), cityFrom, cityTo);
+		ReservedTicket reservedTicket = new ReservedTicket(request.getCustomerLogin(), cityFrom, cityTo, request.getDepartureDate());
 		reservedTickets.save(reservedTicket);
 		return reservedTicket;
 	}

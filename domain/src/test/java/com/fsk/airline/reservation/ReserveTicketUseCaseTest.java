@@ -55,6 +55,21 @@ class ReserveTicketUseCaseTest {
 	}
 
 	@Test
+	void departureDateIsMandatory() {
+		ReserveTicketRequest reserveTicketRequest = new ReserveTicketRequestBuilder()
+				.customerLogin("aCustomer")
+				.cityFrom("Berlin")
+				.cityTo("Prague")
+				.departureDate(null)
+				.build();
+
+		IllegalArgumentException illegalArgumentException =
+				assertThrows(IllegalArgumentException.class, () -> reserveTicketUseCase.reserveTicket(reserveTicketRequest));
+
+		assertThat(illegalArgumentException.getMessage()).isEqualTo("Departure date is mandatory");
+	}
+
+	@Test
 	void destinationCityCannotBeNull() {
 		ReserveTicketRequest reserveTicketRequest = new ReserveTicketRequestBuilder()
 				.customerLogin("aCustomer")
@@ -174,5 +189,7 @@ class ReserveTicketUseCaseTest {
 				Arguments.of("Prague", "Berlin", 281.13299584651537)
 		);
 	}
+
+
 
 }
