@@ -1,6 +1,8 @@
 package com.fsk.airline.reservation;
 
 import com.fsk.airline.reservation.api.ReserveTicketUseCase;
+import com.fsk.airline.reservation.command.ReserveTicketRequest;
+import com.fsk.airline.reservation.command.ReserveTicketRequestBuilder;
 import com.fsk.airline.reservation.model.CityName;
 import com.fsk.airline.reservation.model.ReservedTicket;
 import com.fsk.airline.reservation.service.ReservationService;
@@ -26,7 +28,12 @@ class ReserveTicketUseCaseTest {
 
 	@Test
 	void reserveTicketFromParisToNewYork() {
-		ReservedTicket reservedTicket = reserveTicketUseCase.reserveTicket("aCustomer", "Paris", "New York");
+		ReserveTicketRequest reserveTicketRequest = new ReserveTicketRequestBuilder()
+				.customerLogin("aCustomer")
+				.cityFrom("Paris")
+				.cityTo("New York")
+				.build();
+		ReservedTicket reservedTicket = reserveTicketUseCase.reserveTicket(reserveTicketRequest);
 
 		assertThat(reservedTicket).isNotNull();
 		assertThat(reservedTicket.getFrom()).isEqualTo(CityName.of("Paris"));
@@ -35,7 +42,12 @@ class ReserveTicketUseCaseTest {
 
 	@Test
 	void reserveTicketFromBerlinToPrague() {
-		ReservedTicket reservedTicket = reserveTicketUseCase.reserveTicket("aCustomer", "Berlin", "Prague");
+		ReserveTicketRequest reserveTicketRequest = new ReserveTicketRequestBuilder()
+				.customerLogin("aCustomer")
+				.cityFrom("Berlin")
+				.cityTo("Prague")
+				.build();
+		ReservedTicket reservedTicket = reserveTicketUseCase.reserveTicket(reserveTicketRequest);
 
 		assertThat(reservedTicket).isNotNull();
 		assertThat(reservedTicket.getFrom()).isEqualTo(CityName.of("Berlin"));
@@ -44,48 +56,91 @@ class ReserveTicketUseCaseTest {
 
 	@Test
 	void destinationCityCannotBeNull() {
+		ReserveTicketRequest reserveTicketRequest = new ReserveTicketRequestBuilder()
+				.customerLogin("aCustomer")
+				.cityFrom("Berlin")
+				.cityTo(null)
+				.build();
 		IllegalArgumentException illegalArgumentException =
-				assertThrows(IllegalArgumentException.class, () -> reserveTicketUseCase.reserveTicket("aCustomer", "Berlin", null));
+				assertThrows(IllegalArgumentException.class, () -> reserveTicketUseCase.reserveTicket(reserveTicketRequest));
 
 		assertThat(illegalArgumentException.getMessage()).isEqualTo("City name cannot be empty");
 	}
 
 	@Test
 	void destinationCityCannotBeEmpty() {
+		ReserveTicketRequest reserveTicketRequest = new ReserveTicketRequestBuilder()
+				.customerLogin("aCustomer")
+				.cityFrom("Berlin")
+				.cityTo("")
+				.build();
 		IllegalArgumentException illegalArgumentException =
-				assertThrows(IllegalArgumentException.class, () -> reserveTicketUseCase.reserveTicket("aCustomer", "Berlin", ""));
+				assertThrows(IllegalArgumentException.class, () -> reserveTicketUseCase.reserveTicket(reserveTicketRequest));
 
 		assertThat(illegalArgumentException.getMessage()).isEqualTo("City name cannot be empty");
 	}
 
 	@Test
 	void departureCityCannotBeNull() {
+		ReserveTicketRequest reserveTicketRequest = new ReserveTicketRequestBuilder()
+				.customerLogin("aCustomer")
+				.cityFrom(null)
+				.cityTo("Berlin")
+				.build();
 		IllegalArgumentException illegalArgumentException =
-				assertThrows(IllegalArgumentException.class, () -> reserveTicketUseCase.reserveTicket("aCustomer", null, "Berlin"));
+				assertThrows(IllegalArgumentException.class, () -> reserveTicketUseCase.reserveTicket(reserveTicketRequest));
 
 		assertThat(illegalArgumentException.getMessage()).isEqualTo("City name cannot be empty");
 	}
 
 	@Test
 	void departureCityCannotBeEmpty() {
+		ReserveTicketRequest reserveTicketRequest = new ReserveTicketRequestBuilder()
+				.customerLogin("aCustomer")
+				.cityFrom("")
+				.cityTo("Berlin")
+				.build();
 		IllegalArgumentException illegalArgumentException =
-				assertThrows(IllegalArgumentException.class, () -> reserveTicketUseCase.reserveTicket("aCustomer", "", "Berlin"));
+				assertThrows(IllegalArgumentException.class, () -> reserveTicketUseCase.reserveTicket(reserveTicketRequest));
 
 		assertThat(illegalArgumentException.getMessage()).isEqualTo("City name cannot be empty");
 	}
 
 	@Test
 	void cityDestinationCannotBeTheSameAsDeparture() {
+		ReserveTicketRequest reserveTicketRequest = new ReserveTicketRequestBuilder()
+				.customerLogin("aCustomer")
+				.cityFrom("Berlin")
+				.cityTo("Berlin")
+				.build();
 		IllegalArgumentException illegalArgumentException =
-				assertThrows(IllegalArgumentException.class, () -> reserveTicketUseCase.reserveTicket("aCustomer", "Berlin", "Berlin"));
+				assertThrows(IllegalArgumentException.class, () -> reserveTicketUseCase.reserveTicket(reserveTicketRequest));
 
 		assertThat(illegalArgumentException.getMessage()).isEqualTo("Departure and destination cities cannot be the same");
 	}
 
 	@Test
 	void unknownCityCannotBeUsedAsDeparture() {
+		ReserveTicketRequest reserveTicketRequest = new ReserveTicketRequestBuilder()
+				.customerLogin("aCustomer")
+				.cityFrom("sfdqsdfq")
+				.cityTo("Berlin")
+				.build();
 		IllegalArgumentException illegalArgumentException =
-				assertThrows(IllegalArgumentException.class, () -> reserveTicketUseCase.reserveTicket("aCustomer", "sfdqsdfq", "Berlin"));
+				assertThrows(IllegalArgumentException.class, () -> reserveTicketUseCase.reserveTicket(reserveTicketRequest));
+
+		assertThat(illegalArgumentException.getMessage()).isEqualTo("Unknown city sfdqsdfq");
+	}
+
+	@Test
+	void unknownCityCannotBeUsedAsDestination() {
+		ReserveTicketRequest reserveTicketRequest = new ReserveTicketRequestBuilder()
+				.customerLogin("aCustomer")
+				.cityFrom("Berlin")
+				.cityTo("sfdqsdfq")
+				.build();
+		IllegalArgumentException illegalArgumentException =
+				assertThrows(IllegalArgumentException.class, () -> reserveTicketUseCase.reserveTicket(reserveTicketRequest));
 
 		assertThat(illegalArgumentException.getMessage()).isEqualTo("Unknown city sfdqsdfq");
 	}
@@ -93,7 +148,12 @@ class ReserveTicketUseCaseTest {
 	@ParameterizedTest
 	@MethodSource("citiesAndDistance")
 	void customerCanViewDistanceBetweenCities(String cityFrom, String cityTo, double distance) {
-		ReservedTicket reservedTicket = reserveTicketUseCase.reserveTicket("aCustomer", cityFrom, cityTo);
+		ReserveTicketRequest reserveTicketRequest = new ReserveTicketRequestBuilder()
+				.customerLogin("aCustomer")
+				.cityFrom(cityFrom)
+				.cityTo(cityTo)
+				.build();
+		ReservedTicket reservedTicket = reserveTicketUseCase.reserveTicket(reserveTicketRequest);
 
 		assertThat(reservedTicket.getDistanceInKm()).isEqualTo(distance);
 	}

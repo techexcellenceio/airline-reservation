@@ -2,6 +2,8 @@ package com.fsk.airline.reservation;
 
 import com.fsk.airline.reservation.api.ReserveTicketUseCase;
 import com.fsk.airline.reservation.api.SearchReservedTicketUseCase;
+import com.fsk.airline.reservation.command.ReserveTicketRequest;
+import com.fsk.airline.reservation.command.ReserveTicketRequestBuilder;
 import com.fsk.airline.reservation.model.CityName;
 import com.fsk.airline.reservation.model.ReservedTicket;
 import com.fsk.airline.reservation.model.TicketNumber;
@@ -23,6 +25,11 @@ class SearchReservedTicketUseCaseTest {
 	private final ReserveTicketUseCase reserveTicketUseCase = reservationService;
 
 	private final String CUSTOMER_LOGIN = "aCustomer";
+	private final ReserveTicketRequest RESERVE_TICKET_REQUEST = new ReserveTicketRequestBuilder()
+			.customerLogin(CUSTOMER_LOGIN)
+			.cityFrom("Paris")
+			.cityTo("New York")
+			.build();
 
 	@Test
 	void withoutReservationCustomerCannotFindTicket() {
@@ -33,7 +40,7 @@ class SearchReservedTicketUseCaseTest {
 
 	@Test
 	void afterReservationCustomerCanFindTicket() {
-		ReservedTicket reservedTicket = reserveTicketUseCase.reserveTicket(CUSTOMER_LOGIN, "Paris", "New York");
+		ReservedTicket reservedTicket = reserveTicketUseCase.reserveTicket(RESERVE_TICKET_REQUEST);
 
 		TicketNumber ticketNumber = TicketNumber.of(reservedTicket.getNumber().getValue());
 		Optional<ReservedTicket> foundTicket = searchReservedTicketUseCase.findReservedTicket(CUSTOMER_LOGIN, ticketNumber);
@@ -43,17 +50,17 @@ class SearchReservedTicketUseCaseTest {
 
 	@Test
 	void customerCannotFindAnotherCustomerTicket() {
-		ReservedTicket reservedTicket = reserveTicketUseCase.reserveTicket("anotherCustomer", "Paris", "New York");
+		ReservedTicket reservedTicket = reserveTicketUseCase.reserveTicket(RESERVE_TICKET_REQUEST);
 
 		TicketNumber ticketNumber = TicketNumber.of(reservedTicket.getNumber().getValue());
-		Optional<ReservedTicket> foundTicket = searchReservedTicketUseCase.findReservedTicket(CUSTOMER_LOGIN, ticketNumber);
+		Optional<ReservedTicket> foundTicket = searchReservedTicketUseCase.findReservedTicket("anotherCustomer", ticketNumber);
 
 		assertThat(foundTicket).isEmpty();
 	}
 
 	@Test
 	void customerCanViewDepartureAndDestinationCity() {
-		ReservedTicket reservedTicket = reserveTicketUseCase.reserveTicket(CUSTOMER_LOGIN, "Paris", "New York");
+		ReservedTicket reservedTicket = reserveTicketUseCase.reserveTicket(RESERVE_TICKET_REQUEST);
 
 		TicketNumber ticketNumber = TicketNumber.of(reservedTicket.getNumber().getValue());
 		Optional<ReservedTicket> foundTicket = searchReservedTicketUseCase.findReservedTicket(CUSTOMER_LOGIN, ticketNumber);

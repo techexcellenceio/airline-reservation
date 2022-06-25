@@ -2,6 +2,7 @@ package com.fsk.airline.reservation.service;
 
 import com.fsk.airline.reservation.api.ReserveTicketUseCase;
 import com.fsk.airline.reservation.api.SearchReservedTicketUseCase;
+import com.fsk.airline.reservation.command.ReserveTicketRequest;
 import com.fsk.airline.reservation.model.City;
 import com.fsk.airline.reservation.model.ReservedTicket;
 import com.fsk.airline.reservation.model.TicketNumber;
@@ -21,11 +22,11 @@ public class ReservationService implements ReserveTicketUseCase, SearchReservedT
 	}
 
 	@Override
-	public ReservedTicket reserveTicket(String customerLogin, String cityFromValue, String cityToValue) {
-		City cityFrom = findCity(cityFromValue);
-		City cityTo = findCity(cityToValue);
+	public ReservedTicket reserveTicket(ReserveTicketRequest request) {
+		City cityFrom = findCity(request.getCityFrom());
+		City cityTo = findCity(request.getCityTo());
 
-		ReservedTicket reservedTicket = new ReservedTicket(customerLogin, cityFrom, cityTo);
+		ReservedTicket reservedTicket = new ReservedTicket(request.getCustomerLogin(), cityFrom, cityTo);
 		reservedTickets.save(reservedTicket);
 		return reservedTicket;
 	}
