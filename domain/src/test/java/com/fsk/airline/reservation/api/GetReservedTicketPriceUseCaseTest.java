@@ -4,6 +4,7 @@ import com.fsk.airline.reservation.command.ReserveTicketRequest;
 import com.fsk.airline.reservation.command.ReserveTicketRequestBuilder;
 import com.fsk.airline.reservation.model.ReservedTicket;
 import com.fsk.airline.reservation.service.ReservationService;
+import com.fsk.airline.reservation.service.ReservedTicketPriceService;
 import com.fsk.airline.reservation.spi.Cities;
 import com.fsk.airline.reservation.spi.ReservedTickets;
 import com.fsk.airline.reservation.spi.stub.CitiesInMemory;
@@ -21,66 +22,77 @@ import java.util.stream.Stream;
 import static java.time.temporal.TemporalAdjusters.firstInMonth;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ReserveTicketUseCasePriceTest {
+class GetReservedTicketPriceUseCaseTest {
 
 	private final ReservedTickets reservedTickets = new ReservedTicketsInMemory();
 	private final Cities cities = new CitiesInMemory();
 	private final ReserveTicketUseCase reserveTicketUseCase = new ReservationService(reservedTickets, cities);
+	private final GetReservedTicketPriceUseCase getReservedTicketPriceUseCase = new ReservedTicketPriceService(reservedTickets);
+
+	public static final String CUSTOMER_LOGIN = "aCustomer";
 
 	@Test
 	void reserveTicketFromParisToNewYorkOnMonday() {
 		LocalDate firstMonday = LocalDate.now().with(firstInMonth(DayOfWeek.MONDAY));
 		ReserveTicketRequest reserveTicketRequest = new ReserveTicketRequestBuilder()
-				.customerLogin("aCustomer")
+				.customerLogin(CUSTOMER_LOGIN)
 				.cityFrom("Paris")
 				.cityTo("New York")
 				.departureDate(firstMonday)
 				.build();
 		ReservedTicket reservedTicket = reserveTicketUseCase.reserveTicket(reserveTicketRequest);
 
-		assertThat(reservedTicket.getPrice()).isEqualTo(BigDecimal.valueOf(295644.99));
+		BigDecimal reservedTicketPrice = getReservedTicketPriceUseCase.getReservedTicketPrice(CUSTOMER_LOGIN, reservedTicket.getNumber());
+
+		assertThat(reservedTicketPrice).isEqualTo(BigDecimal.valueOf(295644.99));
 	}
 
 	@Test
 	void reserveTicketFromParisToNewYorkOnTuesday() {
 		LocalDate firstMonday = LocalDate.now().with(firstInMonth(DayOfWeek.TUESDAY));
 		ReserveTicketRequest reserveTicketRequest = new ReserveTicketRequestBuilder()
-				.customerLogin("aCustomer")
+				.customerLogin(CUSTOMER_LOGIN)
 				.cityFrom("Paris")
 				.cityTo("New York")
 				.departureDate(firstMonday)
 				.build();
 		ReservedTicket reservedTicket = reserveTicketUseCase.reserveTicket(reserveTicketRequest);
 
-		assertThat(reservedTicket.getPrice()).isEqualTo(BigDecimal.valueOf(33945304.28));
+		BigDecimal reservedTicketPrice = getReservedTicketPriceUseCase.getReservedTicketPrice(CUSTOMER_LOGIN, reservedTicket.getNumber());
+
+		assertThat(reservedTicketPrice).isEqualTo(BigDecimal.valueOf(33945304.28));
 	}
 
 	@Test
 	void reserveTicketFromParisToNewYorkOnWednesday() {
 		LocalDate firstMonday = LocalDate.now().with(firstInMonth(DayOfWeek.WEDNESDAY));
 		ReserveTicketRequest reserveTicketRequest = new ReserveTicketRequestBuilder()
-				.customerLogin("aCustomer")
+				.customerLogin(CUSTOMER_LOGIN)
 				.cityFrom("Paris")
 				.cityTo("New York")
 				.departureDate(firstMonday)
 				.build();
 		ReservedTicket reservedTicket = reserveTicketUseCase.reserveTicket(reserveTicketRequest);
 
-		assertThat(reservedTicket.getPrice()).isEqualTo(BigDecimal.valueOf(75806.41));
+		BigDecimal reservedTicketPrice = getReservedTicketPriceUseCase.getReservedTicketPrice(CUSTOMER_LOGIN, reservedTicket.getNumber());
+
+		assertThat(reservedTicketPrice).isEqualTo(BigDecimal.valueOf(75806.41));
 	}
 
 	@ParameterizedTest
 	@MethodSource("datesWithCorrespondingPrice")
 	void byDefaultTicketPriceIsEqualToDistance(String cityFrom, String cityTo, LocalDate departureDate, BigDecimal price) {
 		ReserveTicketRequest reserveTicketRequest = new ReserveTicketRequestBuilder()
-				.customerLogin("aCustomer")
+				.customerLogin(CUSTOMER_LOGIN)
 				.cityFrom(cityFrom)
 				.cityTo(cityTo)
 				.departureDate(departureDate)
 				.build();
 		ReservedTicket reservedTicket = reserveTicketUseCase.reserveTicket(reserveTicketRequest);
 
-		assertThat(reservedTicket.getPrice()).isEqualTo(price);
+		BigDecimal reservedTicketPrice = getReservedTicketPriceUseCase.getReservedTicketPrice(CUSTOMER_LOGIN, reservedTicket.getNumber());
+
+		assertThat(reservedTicketPrice).isEqualTo(price);
 	}
 
 	private static Stream<Arguments> datesWithCorrespondingPrice() {

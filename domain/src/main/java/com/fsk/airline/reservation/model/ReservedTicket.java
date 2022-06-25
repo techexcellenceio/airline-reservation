@@ -1,7 +1,5 @@
 package com.fsk.airline.reservation.model;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.time.LocalDate;
 
 public class ReservedTicket {
@@ -54,26 +52,7 @@ public class ReservedTicket {
 		return FlightRoute.of(from, to).getDistance();
 	}
 
-	public BigDecimal getPrice() {
-		BigDecimal distance = BigDecimal.valueOf(getDistanceInKm());
-		BigDecimal coefficient = determinePriceCoefficient();
-		return distance.multiply(coefficient).setScale(2, RoundingMode.HALF_UP);
-	}
-
-	private BigDecimal determinePriceCoefficient() {
-		return switch (departureDate.getDayOfWeek()) {
-			case MONDAY -> new BigDecimal("50.7");
-			case TUESDAY -> distanceSubtractedBy10();
-			case WEDNESDAY -> sumOfTheLengthOfTheTwoCities();
-			default -> new BigDecimal("1");
-		};
-	}
-
-	private BigDecimal sumOfTheLengthOfTheTwoCities() {
-		return BigDecimal.valueOf(from.getCityNameLength()).add(BigDecimal.valueOf(to.getCityNameLength()));
-	}
-
-	private BigDecimal distanceSubtractedBy10() {
-		return BigDecimal.valueOf(getDistanceInKm()).subtract(new BigDecimal(10));
+	LocalDate getDepartureDate() {
+		return departureDate;
 	}
 }

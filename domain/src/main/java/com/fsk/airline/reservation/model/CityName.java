@@ -21,8 +21,8 @@ public class CityName {
 		}
 	}
 
-	public String getValue() {
-		return value;
+	int getCityNameLength() {
+		return value.length();
 	}
 
 	@Override
