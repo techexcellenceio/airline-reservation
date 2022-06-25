@@ -1,6 +1,5 @@
-package com.fsk.airline.reservation;
+package com.fsk.airline.reservation.api;
 
-import com.fsk.airline.reservation.api.ReserveTicketUseCase;
 import com.fsk.airline.reservation.command.ReserveTicketRequest;
 import com.fsk.airline.reservation.command.ReserveTicketRequestBuilder;
 import com.fsk.airline.reservation.model.ReservedTicket;
