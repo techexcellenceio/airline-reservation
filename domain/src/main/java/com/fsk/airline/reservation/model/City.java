@@ -36,4 +36,8 @@ public class City {
 	public CityName getName() {
 		return name;
 	}
+
+	int getCityNameLength() {
+		return name.getValue().length();
+	}
 }
