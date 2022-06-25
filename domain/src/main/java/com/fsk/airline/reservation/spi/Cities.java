@@ -7,4 +7,6 @@ import java.util.Optional;
 public interface Cities {
 
 	Optional<City> findOne(String cityName);
+
+	double getDistanceInKm(City cityFrom, City cityTo);
 }

@@ -6,8 +6,9 @@ public class ReservedTicket {
 	private final String customerLogin;
 	private final City from;
 	private final City to;
+	private final double distanceInKm;
 
-	public ReservedTicket(String customerLogin, City from, City to) {
+	public ReservedTicket(String customerLogin, City from, City to, double distanceInKm) {
 		if (from.equals(to)) {
 			throw new IllegalArgumentException("Departure and destination cities cannot be the same");
 		}
@@ -15,6 +16,7 @@ public class ReservedTicket {
 		this.customerLogin = customerLogin;
 		this.from = from;
 		this.to = to;
+		this.distanceInKm = distanceInKm;
 	}
 
 	public City getFrom() {
@@ -31,5 +33,9 @@ public class ReservedTicket {
 
 	public String getCustomerLogin() {
 		return customerLogin;
+	}
+
+	public double getDistanceInKm() {
+		return distanceInKm;
 	}
 }
