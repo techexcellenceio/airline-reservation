@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface ReservedTickets {
 
-	Optional<ReservedTicket> findOne(TicketNumber ticketNumber);
+	Optional<ReservedTicket> findOne(String customerLogin, TicketNumber ticketNumber);
 
 	void save(ReservedTicket reservedTicket);
 }

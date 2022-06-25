@@ -36,4 +36,14 @@ class SearchReservedTicketUseCaseTest {
 
 		assertThat(foundTicket).isPresent();
 	}
+
+	@Test
+	void customerCannotFindAnotherCustomerTicket() {
+		ReservedTicket reservedTicket = reserveTicketUseCase.reserveTicket("anotherCustomer", "Paris", "New York");
+
+		TicketNumber ticketNumber = TicketNumber.of(reservedTicket.getNumber().getValue());
+		Optional<ReservedTicket> foundTicket = searchReservedTicketUseCase.findReservedTicket(CUSTOMER_LOGIN, ticketNumber);
+
+		assertThat(foundTicket).isEmpty();
+	}
 }

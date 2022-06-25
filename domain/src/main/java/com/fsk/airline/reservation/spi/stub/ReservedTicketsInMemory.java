@@ -13,9 +13,16 @@ public class ReservedTicketsInMemory implements ReservedTickets {
 	private final Map<TicketNumber, ReservedTicket> reservedTickets = new HashMap<>();
 
 	@Override
-	public Optional<ReservedTicket> findOne(TicketNumber ticketNumber) {
-		ReservedTicket reservedTicket1 = reservedTickets.get(ticketNumber);
-		return Optional.ofNullable(reservedTicket1);
+	public Optional<ReservedTicket> findOne(String customerLogin, TicketNumber ticketNumber) {
+		ReservedTicket reservedTicket = reservedTickets.get(ticketNumber);
+		if (ticketExistsAndBelongsToCustomer(customerLogin, reservedTicket)) {
+			return Optional.of(reservedTicket);
+		}
+		return Optional.empty();
+	}
+
+	private boolean ticketExistsAndBelongsToCustomer(String customerLogin, ReservedTicket reservedTicket) {
+		return reservedTicket != null && reservedTicket.getCustomerLogin().equals(customerLogin);
 	}
 
 	@Override

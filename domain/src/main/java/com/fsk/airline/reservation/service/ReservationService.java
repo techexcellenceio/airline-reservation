@@ -20,7 +20,7 @@ public class ReservationService implements ReserveTicketUseCase, SearchReservedT
 	@Override
 	public ReservedTicket reserveTicket(String customerLogin, String cityFrom, String cityTo) {
 
-		ReservedTicket reservedTicket = new ReservedTicket(new City(cityFrom), new City(cityTo));
+		ReservedTicket reservedTicket = new ReservedTicket(customerLogin, new City(cityFrom), new City(cityTo));
 		reservedTickets.save(reservedTicket);
 		return reservedTicket;
 	}
@@ -28,6 +28,6 @@ public class ReservationService implements ReserveTicketUseCase, SearchReservedT
 	@Override
 	public Optional<ReservedTicket> findReservedTicket(String customerLogin, TicketNumber ticketNbr) {
 
-		return reservedTickets.findOne(ticketNbr);
+		return reservedTickets.findOne(customerLogin, ticketNbr);
 	}
 }
