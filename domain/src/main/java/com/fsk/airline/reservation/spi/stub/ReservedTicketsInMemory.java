@@ -21,6 +21,11 @@ public class ReservedTicketsInMemory implements ReservedTickets {
 		return Optional.empty();
 	}
 
+	@Override
+	public boolean exists(String customerLogin, TicketNumber ticketNumber) {
+		return findOne(customerLogin, ticketNumber).isPresent();
+	}
+
 	private boolean ticketExistsAndBelongsToCustomer(String customerLogin, ReservedTicket reservedTicket) {
 		return reservedTicket != null && reservedTicket.getCustomerLogin().equals(customerLogin);
 	}

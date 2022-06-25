@@ -6,8 +6,10 @@ import com.fsk.airline.reservation.model.ReservedTicket;
 import com.fsk.airline.reservation.service.ReservationService;
 import com.fsk.airline.reservation.service.ReservedTicketPriceService;
 import com.fsk.airline.reservation.spi.Cities;
+import com.fsk.airline.reservation.spi.Guests;
 import com.fsk.airline.reservation.spi.ReservedTickets;
 import com.fsk.airline.reservation.spi.stub.CitiesInMemory;
+import com.fsk.airline.reservation.spi.stub.GuestsInMemory;
 import com.fsk.airline.reservation.spi.stub.ReservedTicketsInMemory;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -26,8 +28,10 @@ class GetReservedTicketPriceUseCaseTest {
 
 	private final ReservedTickets reservedTickets = new ReservedTicketsInMemory();
 	private final Cities cities = new CitiesInMemory();
+	private final Guests guests = new GuestsInMemory();
+
 	private final ReserveTicketUseCase reserveTicketUseCase = new ReservationService(reservedTickets, cities);
-	private final GetReservedTicketPriceUseCase getReservedTicketPriceUseCase = new ReservedTicketPriceService(reservedTickets);
+	private final GetReservedTicketPriceUseCase getReservedTicketPriceUseCase = new ReservedTicketPriceService(reservedTickets, guests);
 
 	public static final String CUSTOMER_LOGIN = "aCustomer";
 

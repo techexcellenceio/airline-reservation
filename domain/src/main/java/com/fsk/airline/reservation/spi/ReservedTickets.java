@@ -9,5 +9,7 @@ public interface ReservedTickets {
 
 	Optional<ReservedTicket> findOne(String customerLogin, TicketNumber ticketNumber);
 
+	boolean exists(String customerLogin, TicketNumber ticketNumber);
+
 	void save(ReservedTicket reservedTicket);
 }

@@ -1,6 +1,5 @@
 package com.fsk.airline.reservation.service;
 
-import com.fsk.airline.reservation.api.AddGuestSeatUseCase;
 import com.fsk.airline.reservation.api.ReserveTicketUseCase;
 import com.fsk.airline.reservation.api.SearchReservedTicketUseCase;
 import com.fsk.airline.reservation.command.ReserveTicketRequest;
@@ -12,7 +11,7 @@ import com.fsk.airline.reservation.spi.ReservedTickets;
 
 import java.util.Optional;
 
-public class ReservationService implements ReserveTicketUseCase, SearchReservedTicketUseCase, AddGuestSeatUseCase {
+public class ReservationService implements ReserveTicketUseCase, SearchReservedTicketUseCase {
 
 	private final ReservedTickets reservedTickets;
 	private final Cities cities;
