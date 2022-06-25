@@ -9,6 +9,7 @@ import com.fsk.airline.reservation.spi.stub.ReservedTicketsInMemory;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ReserveTicketUseCaseTest {
 
@@ -33,6 +34,36 @@ class ReserveTicketUseCaseTest {
 		assertThat(reservedTicket.getTo()).isEqualTo(new City("Prague"));
 	}
 
-	//city destination cannot be the same as departure
+	@Test
+	void destinationCityCannotBeNull() {
+		IllegalArgumentException illegalArgumentException =
+				assertThrows(IllegalArgumentException.class, () -> reserveTicketUseCase.reserveTicket("aCustomer", "Berlin", null));
+
+		assertThat(illegalArgumentException.getMessage()).isEqualTo("City name cannot be empty");
+	}
+
+	@Test
+	void destinationCityCannotBeEmpty() {
+		IllegalArgumentException illegalArgumentException =
+				assertThrows(IllegalArgumentException.class, () -> reserveTicketUseCase.reserveTicket("aCustomer", "Berlin", ""));
+
+		assertThat(illegalArgumentException.getMessage()).isEqualTo("City name cannot be empty");
+	}
+
+	@Test
+	void departureCityCannotBeNull() {
+		IllegalArgumentException illegalArgumentException =
+				assertThrows(IllegalArgumentException.class, () -> reserveTicketUseCase.reserveTicket("aCustomer", null, "Berlin"));
+
+		assertThat(illegalArgumentException.getMessage()).isEqualTo("City name cannot be empty");
+	}
+
+	@Test
+	void departureCityCannotBeEmpty() {
+		IllegalArgumentException illegalArgumentException =
+				assertThrows(IllegalArgumentException.class, () -> reserveTicketUseCase.reserveTicket("aCustomer", "", "Berlin"));
+
+		assertThat(illegalArgumentException.getMessage()).isEqualTo("City name cannot be empty");
+	}
 
 }

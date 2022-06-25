@@ -7,7 +7,14 @@ public class City {
 	private final String name;
 
 	public City(String name) {
+		checkCityNameIsNotEmpty(name);
 		this.name = name;
+	}
+
+	private void checkCityNameIsNotEmpty(String name) {
+		if (name == null || "".equals(name)) {
+			throw new IllegalArgumentException("City name cannot be empty");
+		}
 	}
 
 	@Override
