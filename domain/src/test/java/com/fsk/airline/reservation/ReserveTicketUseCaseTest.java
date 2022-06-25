@@ -74,4 +74,12 @@ class ReserveTicketUseCaseTest {
 		assertThat(illegalArgumentException.getMessage()).isEqualTo("Departure and destination cities cannot be the same");
 	}
 
+	@Test
+	void unknownCityCannotBeUsedAsDeparture() {
+		IllegalArgumentException illegalArgumentException =
+				assertThrows(IllegalArgumentException.class, () -> reserveTicketUseCase.reserveTicket("aCustomer", "sfdqsdfq", "Berlin"));
+
+		assertThat(illegalArgumentException.getMessage()).isEqualTo("Unknown city sfdqsdfq");
+	}
+
 }
