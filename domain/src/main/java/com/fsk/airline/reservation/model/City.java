@@ -1,48 +1,39 @@
 package com.fsk.airline.reservation.model;
 
-import java.util.Objects;
-
 public class City {
 
-	private final String name;
+	private final CityName name;
+	private final double latitude;
+	private final double longitude;
 
-	public static final City PARIS = City.of("Paris");
-	public static final City BERLIN = City.of("Berlin");
-	public static final City NEW_YORK = City.of("New York");
-	public static final City PRAGUE = City.of("Prague");
-
-	private City(String name) {
-		checkCityNameIsNotEmpty(name);
-		this.name = name;
+	private City(String name, double latitude, double longitude) {
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.name = CityName.of(name);
 	}
 
-	public static City of(String name) {
-		return new City(name);
-	}
-
-	private void checkCityNameIsNotEmpty(String name) {
-		if (name == null || "".equals(name)) {
-			throw new IllegalArgumentException("City name cannot be empty");
-		}
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		City city = (City) o;
-		return Objects.equals(name, city.name);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(name);
+	public static City of(String name, double latitude, double longitude) {
+		return new City(name, latitude, longitude);
 	}
 
 	@Override
 	public String toString() {
 		return "City{" +
-				"name='" + name + '\'' +
+				"name=" + name +
+				", latitude=" + latitude +
+				", longitude=" + longitude +
 				'}';
+	}
+
+	double getLatitude() {
+		return latitude;
+	}
+
+	double getLongitude() {
+		return longitude;
+	}
+
+	public CityName getName() {
+		return name;
 	}
 }

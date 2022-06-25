@@ -2,7 +2,7 @@ package com.fsk.airline.reservation;
 
 import com.fsk.airline.reservation.api.ReserveTicketUseCase;
 import com.fsk.airline.reservation.api.SearchReservedTicketUseCase;
-import com.fsk.airline.reservation.model.City;
+import com.fsk.airline.reservation.model.CityName;
 import com.fsk.airline.reservation.model.ReservedTicket;
 import com.fsk.airline.reservation.model.TicketNumber;
 import com.fsk.airline.reservation.service.ReservationService;
@@ -63,8 +63,8 @@ class SearchReservedTicketUseCaseTest {
 		Optional<ReservedTicket> foundTicket = searchReservedTicketUseCase.findReservedTicket(CUSTOMER_LOGIN, ticketNumber);
 
 		assertThat(foundTicket).isPresent();
-		assertThat(foundTicket.get().getFrom()).isEqualTo(City.PARIS);
-		assertThat(foundTicket.get().getTo()).isEqualTo(City.NEW_YORK);
+		assertThat(foundTicket.get().getFrom()).isEqualTo(CityName.of("Paris"));
+		assertThat(foundTicket.get().getTo()).isEqualTo(CityName.of("New York"));
 	}
 
 	@ParameterizedTest
@@ -81,18 +81,18 @@ class SearchReservedTicketUseCaseTest {
 
 	private static Stream<Arguments> citiesAndDistance() {
 		return Stream.of(
-				Arguments.of("Paris", "New York", 5837.20),
-				Arguments.of("Paris", "Berlin", 878.08),
-				Arguments.of("Paris", "Prague", 881.77),
-				Arguments.of("New York", "Berlin", 6385.28),
-				Arguments.of("New York", "Prague", 6570.78),
-				Arguments.of("Berlin", "Prague", 279.76),
-				Arguments.of("New York", "Paris", 5837.20),
-				Arguments.of("Berlin", "Paris", 878.08),
-				Arguments.of("Prague", "Paris", 881.77),
-				Arguments.of("Prague", "Berlin", 279.76),
-				Arguments.of("Prague", "New York", 6570.78),
-				Arguments.of("Berlin", "New York", 6385.28)
+				Arguments.of("Paris", "New York", 5831.262033439712),
+				Arguments.of("New York", "Paris", 5831.262033439712),
+				Arguments.of("Paris", "Berlin", 877.4633259175432),
+				Arguments.of("Berlin", "Paris", 877.4633259175432),
+				Arguments.of("Paris", "Prague", 882.8163086487457),
+				Arguments.of("Prague", "Paris", 882.8163086487457),
+				Arguments.of("New York", "Berlin", 6379.329836559427),
+				Arguments.of("Berlin", "New York", 6379.329836559427),
+				Arguments.of("New York", "Prague", 6566.678422533317),
+				Arguments.of("Prague", "New York", 6566.678422533317),
+				Arguments.of("Berlin", "Prague", 281.13299584651537),
+				Arguments.of("Prague", "Berlin", 281.13299584651537)
 				);
 	}
 }

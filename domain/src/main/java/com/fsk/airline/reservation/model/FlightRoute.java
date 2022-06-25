@@ -2,6 +2,8 @@ package com.fsk.airline.reservation.model;
 
 import java.util.Objects;
 
+import static java.lang.Math.*;
+
 public class FlightRoute {
 
 	private final City pointA;
@@ -16,6 +18,31 @@ public class FlightRoute {
 
 	public static FlightRoute of(City pointA, City pointB) {
 		return new FlightRoute(pointA, pointB);
+	}
+
+	public double getDistance() {
+		// Convert the latitudes and longitudes from degree to radians.
+		double pointALatitudeInRadians = toRadians(pointA.getLatitude());
+		double pointALongitudeInRadians = toRadians(pointA.getLongitude());
+		double pointBLatitudeInRadians = toRadians(pointB.getLatitude());
+		double pointBLongitudeInRadians = toRadians(pointB.getLongitude());
+
+		// Haversine Formula
+		double dlong = pointBLongitudeInRadians - pointALongitudeInRadians;
+		double dlat = pointBLatitudeInRadians - pointALatitudeInRadians;
+
+		double ans = pow(sin(dlat / 2), 2) +
+				cos(pointALatitudeInRadians) * cos(pointBLatitudeInRadians) *
+						pow(sin(dlong / 2), 2);
+
+		ans = 2 * asin(sqrt(ans));
+
+		// Radius of Earth in
+		// Kilometers, radiusOfEarth = 6371
+		// Use radiusOfEarth = 3956 for miles
+		double radiusOfEarth = 6371;
+
+		return ans * radiusOfEarth;
 	}
 
 	@Override

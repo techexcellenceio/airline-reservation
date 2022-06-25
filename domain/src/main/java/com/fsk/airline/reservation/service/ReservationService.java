@@ -24,9 +24,8 @@ public class ReservationService implements ReserveTicketUseCase, SearchReservedT
 	public ReservedTicket reserveTicket(String customerLogin, String cityFromValue, String cityToValue) {
 		City cityFrom = findCity(cityFromValue);
 		City cityTo = findCity(cityToValue);
-		double distance = cities.getDistanceInKm(cityFrom, cityTo);
 
-		ReservedTicket reservedTicket = new ReservedTicket(customerLogin, cityFrom, cityTo, distance);
+		ReservedTicket reservedTicket = new ReservedTicket(customerLogin, cityFrom, cityTo);
 		reservedTickets.save(reservedTicket);
 		return reservedTicket;
 	}

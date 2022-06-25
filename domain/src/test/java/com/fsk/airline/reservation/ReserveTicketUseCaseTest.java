@@ -1,7 +1,7 @@
 package com.fsk.airline.reservation;
 
 import com.fsk.airline.reservation.api.ReserveTicketUseCase;
-import com.fsk.airline.reservation.model.City;
+import com.fsk.airline.reservation.model.CityName;
 import com.fsk.airline.reservation.model.ReservedTicket;
 import com.fsk.airline.reservation.service.ReservationService;
 import com.fsk.airline.reservation.spi.Cities;
@@ -24,8 +24,8 @@ class ReserveTicketUseCaseTest {
 		ReservedTicket reservedTicket = reserveTicketUseCase.reserveTicket("aCustomer", "Paris", "New York");
 
 		assertThat(reservedTicket).isNotNull();
-		assertThat(reservedTicket.getFrom()).isEqualTo(City.PARIS);
-		assertThat(reservedTicket.getTo()).isEqualTo(City.NEW_YORK);
+		assertThat(reservedTicket.getFrom()).isEqualTo(CityName.of("Paris"));
+		assertThat(reservedTicket.getTo()).isEqualTo(CityName.of("New York"));
 	}
 
 	@Test
@@ -33,8 +33,8 @@ class ReserveTicketUseCaseTest {
 		ReservedTicket reservedTicket = reserveTicketUseCase.reserveTicket("aCustomer", "Berlin", "Prague");
 
 		assertThat(reservedTicket).isNotNull();
-		assertThat(reservedTicket.getFrom()).isEqualTo(City.BERLIN);
-		assertThat(reservedTicket.getTo()).isEqualTo(City.PRAGUE);
+		assertThat(reservedTicket.getFrom()).isEqualTo(CityName.of("Berlin"));
+		assertThat(reservedTicket.getTo()).isEqualTo(CityName.of("Prague"));
 	}
 
 	@Test
