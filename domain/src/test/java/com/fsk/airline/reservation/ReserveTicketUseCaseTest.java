@@ -4,7 +4,9 @@ import com.fsk.airline.reservation.api.ReserveTicketUseCase;
 import com.fsk.airline.reservation.model.City;
 import com.fsk.airline.reservation.model.ReservedTicket;
 import com.fsk.airline.reservation.service.ReservationService;
+import com.fsk.airline.reservation.spi.Cities;
 import com.fsk.airline.reservation.spi.ReservedTickets;
+import com.fsk.airline.reservation.spi.stub.CitiesInMemory;
 import com.fsk.airline.reservation.spi.stub.ReservedTicketsInMemory;
 import org.junit.jupiter.api.Test;
 
@@ -14,15 +16,16 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class ReserveTicketUseCaseTest {
 
 	private final ReservedTickets reservedTickets = new ReservedTicketsInMemory();
-	private final ReserveTicketUseCase reserveTicketUseCase = new ReservationService(reservedTickets);
+	private final Cities cities = new CitiesInMemory();
+	private final ReserveTicketUseCase reserveTicketUseCase = new ReservationService(reservedTickets, cities);
 
 	@Test
 	void reserveTicketFromParisToNewYork() {
 		ReservedTicket reservedTicket = reserveTicketUseCase.reserveTicket("aCustomer", "Paris", "New York");
 
 		assertThat(reservedTicket).isNotNull();
-		assertThat(reservedTicket.getFrom()).isEqualTo(new City("Paris"));
-		assertThat(reservedTicket.getTo()).isEqualTo(new City("New York"));
+		assertThat(reservedTicket.getFrom()).isEqualTo(City.of("Paris"));
+		assertThat(reservedTicket.getTo()).isEqualTo(City.of("New York"));
 	}
 
 	@Test
@@ -30,8 +33,8 @@ class ReserveTicketUseCaseTest {
 		ReservedTicket reservedTicket = reserveTicketUseCase.reserveTicket("aCustomer", "Berlin", "Prague");
 
 		assertThat(reservedTicket).isNotNull();
-		assertThat(reservedTicket.getFrom()).isEqualTo(new City("Berlin"));
-		assertThat(reservedTicket.getTo()).isEqualTo(new City("Prague"));
+		assertThat(reservedTicket.getFrom()).isEqualTo(City.of("Berlin"));
+		assertThat(reservedTicket.getTo()).isEqualTo(City.of("Prague"));
 	}
 
 	@Test

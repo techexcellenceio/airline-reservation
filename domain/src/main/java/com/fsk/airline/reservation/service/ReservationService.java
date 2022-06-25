@@ -5,37 +5,33 @@ import com.fsk.airline.reservation.api.SearchReservedTicketUseCase;
 import com.fsk.airline.reservation.model.City;
 import com.fsk.airline.reservation.model.ReservedTicket;
 import com.fsk.airline.reservation.model.TicketNumber;
+import com.fsk.airline.reservation.spi.Cities;
 import com.fsk.airline.reservation.spi.ReservedTickets;
 
-import java.util.List;
 import java.util.Optional;
 
 public class ReservationService implements ReserveTicketUseCase, SearchReservedTicketUseCase {
 
 	private final ReservedTickets reservedTickets;
+	private final Cities cities;
 
-	public ReservationService(ReservedTickets reservedTickets) {
+	public ReservationService(ReservedTickets reservedTickets, Cities cities) {
 		this.reservedTickets = reservedTickets;
+		this.cities = cities;
 	}
 
 	@Override
 	public ReservedTicket reserveTicket(String customerLogin, String cityFromValue, String cityToValue) {
-		City cityFrom = new City(cityFromValue);
-		City cityTo = new City(cityToValue);
-
-		checkCityExists(cityFromValue);
-		checkCityExists(cityToValue);
+		City cityFrom = findCity(cityFromValue);
+		City cityTo = findCity(cityToValue);
 
 		ReservedTicket reservedTicket = new ReservedTicket(customerLogin, cityFrom, cityTo);
 		reservedTickets.save(reservedTicket);
 		return reservedTicket;
 	}
 
-	private void checkCityExists(String city) {
-		List<String> knownCities = List.of("Paris", "New York", "Berlin", "Prague");
-		if(!knownCities.contains(city)) {
-			throw new IllegalArgumentException("Unknown city " + city);
-		}
+	private City findCity(String cityValue) {
+		return cities.findOne(cityValue).orElseThrow(() -> new IllegalArgumentException("Unknown city " + cityValue));
 	}
 
 	@Override

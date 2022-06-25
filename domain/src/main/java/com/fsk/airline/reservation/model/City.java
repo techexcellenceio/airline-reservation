@@ -6,9 +6,13 @@ public class City {
 
 	private final String name;
 
-	public City(String name) {
+	private City(String name) {
 		checkCityNameIsNotEmpty(name);
 		this.name = name;
+	}
+
+	public static City of(String name) {
+		return new City(name);
 	}
 
 	private void checkCityNameIsNotEmpty(String name) {

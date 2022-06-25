@@ -5,6 +5,8 @@ import com.fsk.airline.reservation.api.SearchReservedTicketUseCase;
 import com.fsk.airline.reservation.model.ReservedTicket;
 import com.fsk.airline.reservation.model.TicketNumber;
 import com.fsk.airline.reservation.service.ReservationService;
+import com.fsk.airline.reservation.spi.Cities;
+import com.fsk.airline.reservation.spi.stub.CitiesInMemory;
 import com.fsk.airline.reservation.spi.stub.ReservedTicketsInMemory;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +16,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class SearchReservedTicketUseCaseTest {
 
-	private final ReservationService reservationService = new ReservationService(new ReservedTicketsInMemory());
+	private final Cities cities = new CitiesInMemory();
+	private final ReservationService reservationService = new ReservationService(new ReservedTicketsInMemory(), cities);
 	private final SearchReservedTicketUseCase searchReservedTicketUseCase = reservationService;
 	private final ReserveTicketUseCase reserveTicketUseCase = reservationService;
 
