@@ -86,7 +86,13 @@ class SearchReservedTicketUseCaseTest {
 				Arguments.of("Paris", "Prague", 881.77),
 				Arguments.of("New York", "Berlin", 6385.28),
 				Arguments.of("New York", "Prague", 6570.78),
-				Arguments.of("Berlin", "Prague", 279.76)
-		);
+				Arguments.of("Berlin", "Prague", 279.76),
+				Arguments.of("New York", "Paris", 5837.20),
+				Arguments.of("Berlin", "Paris", 878.08),
+				Arguments.of("Prague", "Paris", 881.77),
+				Arguments.of("Prague", "Berlin", 279.76),
+				Arguments.of("Prague", "New York", 6570.78),
+				Arguments.of("Berlin", "New York", 6385.28)
+				);
 	}
 }

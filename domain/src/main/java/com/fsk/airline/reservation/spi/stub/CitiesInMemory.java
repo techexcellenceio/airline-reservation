@@ -1,20 +1,23 @@
 package com.fsk.airline.reservation.spi.stub;
 
 import com.fsk.airline.reservation.model.City;
+import com.fsk.airline.reservation.model.FlightRoute;
 import com.fsk.airline.reservation.spi.Cities;
 
 import java.util.List;
 import java.util.Optional;
 
+import static com.fsk.airline.reservation.model.City.*;
+
 public class CitiesInMemory implements Cities {
-	
+
 	private final List<City> knownCities = List.of(
-			City.PARIS,
-			City.NEW_YORK,
-			City.BERLIN,
-			City.PRAGUE
+			PARIS,
+			NEW_YORK,
+			BERLIN,
+			PRAGUE
 	);
-	
+
 	@Override
 	public Optional<City> findOne(String cityName) {
 		City city = City.of(cityName);
@@ -29,22 +32,23 @@ public class CitiesInMemory implements Cities {
 		if (cityFrom.equals(cityTo)) {
 			return 0;
 		}
-		if(cityFrom.equals(City.PARIS) && cityTo.equals(City.NEW_YORK)) {
+		FlightRoute flightRoute = FlightRoute.of(cityFrom, cityTo);
+		if (FlightRoute.of(PARIS, NEW_YORK).equals(flightRoute)) {
 			return 5837.20;
 		}
-		if(cityFrom.equals(City.PARIS) && cityTo.equals(City.BERLIN)) {
+		if (FlightRoute.of(PARIS, BERLIN).equals(flightRoute)) {
 			return 878.08;
 		}
-		if(cityFrom.equals(City.PARIS) && cityTo.equals(City.PRAGUE)) {
+		if (FlightRoute.of(PARIS, PRAGUE).equals(flightRoute)) {
 			return 881.77;
 		}
-		if(cityFrom.equals(City.NEW_YORK) && cityTo.equals(City.BERLIN)) {
+		if (FlightRoute.of(NEW_YORK, BERLIN).equals(flightRoute)) {
 			return 6385.28;
 		}
-		if(cityFrom.equals(City.NEW_YORK) && cityTo.equals(City.PRAGUE)) {
+		if (FlightRoute.of(NEW_YORK, PRAGUE).equals(flightRoute)) {
 			return 6570.78;
 		}
-		if(cityFrom.equals(City.BERLIN) && cityTo.equals(City.PRAGUE)) {
+		if (FlightRoute.of(BERLIN, PRAGUE).equals(flightRoute)) {
 			return 279.76;
 		}
 		throw new IllegalStateException("No Distance registered between cities " + cityFrom + " and " + cityTo);
