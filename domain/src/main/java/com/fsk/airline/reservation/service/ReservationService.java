@@ -4,10 +4,10 @@ import com.fsk.airline.reservation.api.ReserveTicketUseCase;
 import com.fsk.airline.reservation.api.SearchReservedTicketUseCase;
 import com.fsk.airline.reservation.model.City;
 import com.fsk.airline.reservation.model.ReservedTicket;
+import com.fsk.airline.reservation.model.TicketNumber;
 import com.fsk.airline.reservation.spi.ReservedTickets;
 
 import java.util.Optional;
-import java.util.UUID;
 
 public class ReservationService implements ReserveTicketUseCase, SearchReservedTicketUseCase {
 
@@ -20,14 +20,13 @@ public class ReservationService implements ReserveTicketUseCase, SearchReservedT
 	@Override
 	public ReservedTicket reserveTicket(String customerLogin, String cityFrom, String cityTo) {
 
-		String ticketNumber = UUID.randomUUID().toString();
-		ReservedTicket reservedTicket = new ReservedTicket(ticketNumber, new City(cityFrom), new City(cityTo));
+		ReservedTicket reservedTicket = new ReservedTicket(new City(cityFrom), new City(cityTo));
 		reservedTickets.save(reservedTicket);
 		return reservedTicket;
 	}
 
 	@Override
-	public Optional<ReservedTicket> findReservedTicket(String customerLogin, String ticketNbr) {
+	public Optional<ReservedTicket> findReservedTicket(String customerLogin, TicketNumber ticketNbr) {
 
 		return reservedTickets.findOne(ticketNbr);
 	}

@@ -3,6 +3,7 @@ package com.fsk.airline.reservation;
 import com.fsk.airline.reservation.api.ReserveTicketUseCase;
 import com.fsk.airline.reservation.api.SearchReservedTicketUseCase;
 import com.fsk.airline.reservation.model.ReservedTicket;
+import com.fsk.airline.reservation.model.TicketNumber;
 import com.fsk.airline.reservation.service.ReservationService;
 import com.fsk.airline.reservation.spi.stub.ReservedTicketsInMemory;
 import org.junit.jupiter.api.Test;
@@ -21,7 +22,8 @@ class SearchReservedTicketUseCaseTest {
 
 	@Test
 	void withoutReservationCustomerCannotFindTicket() {
-		Optional<ReservedTicket> reservedTicket = searchReservedTicketUseCase.findReservedTicket(CUSTOMER_LOGIN, "unexistingTicketNbr");
+		TicketNumber unknownTicketNumber = TicketNumber.generate();
+		Optional<ReservedTicket> reservedTicket = searchReservedTicketUseCase.findReservedTicket(CUSTOMER_LOGIN, unknownTicketNumber);
 		assertThat(reservedTicket).isEmpty();
 	}
 
@@ -29,7 +31,8 @@ class SearchReservedTicketUseCaseTest {
 	void afterReservationCustomerCanFindTicket() {
 		ReservedTicket reservedTicket = reserveTicketUseCase.reserveTicket(CUSTOMER_LOGIN, "Paris", "New York");
 
-		Optional<ReservedTicket> foundTicket = searchReservedTicketUseCase.findReservedTicket(CUSTOMER_LOGIN, reservedTicket.getNumber());
+		TicketNumber ticketNumber = TicketNumber.of(reservedTicket.getNumber().getValue());
+		Optional<ReservedTicket> foundTicket = searchReservedTicketUseCase.findReservedTicket(CUSTOMER_LOGIN, ticketNumber);
 
 		assertThat(foundTicket).isPresent();
 	}

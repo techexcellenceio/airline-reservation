@@ -1,25 +1,25 @@
 package com.fsk.airline.reservation.spi.stub;
 
 import com.fsk.airline.reservation.model.ReservedTicket;
+import com.fsk.airline.reservation.model.TicketNumber;
 import com.fsk.airline.reservation.spi.ReservedTickets;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 public class ReservedTicketsInMemory implements ReservedTickets {
 
-	private final List<ReservedTicket> reservedTickets = new ArrayList<>();
+	private final Map<TicketNumber, ReservedTicket> reservedTickets = new HashMap<>();
 
 	@Override
-	public Optional<ReservedTicket> findOne(String ticketNumber) {
-		return reservedTickets.stream()
-				.filter(t -> t.getNumber().equals(ticketNumber))
-				.findFirst();
+	public Optional<ReservedTicket> findOne(TicketNumber ticketNumber) {
+		ReservedTicket reservedTicket1 = reservedTickets.get(ticketNumber);
+		return Optional.ofNullable(reservedTicket1);
 	}
 
 	@Override
 	public void save(ReservedTicket reservedTicket) {
-		reservedTickets.add(reservedTicket);
+		reservedTickets.put(reservedTicket.getNumber(), reservedTicket);
 	}
 }
