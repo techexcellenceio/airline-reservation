@@ -59,7 +59,7 @@ public class ReservedTicket {
 		return FlightRoute.of(from, to).getDistance();
 	}
 
-	LocalDate getDepartureDate() {
+	public LocalDate getDepartureDate() {
 		return departureDate;
 	}
 }
