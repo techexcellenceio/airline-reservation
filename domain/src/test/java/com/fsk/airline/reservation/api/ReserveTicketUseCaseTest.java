@@ -14,6 +14,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.time.LocalDate;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -66,6 +67,21 @@ class ReserveTicketUseCaseTest {
 				assertThrows(IllegalArgumentException.class, () -> reserveTicketUseCase.reserveTicket(reserveTicketRequest));
 
 		assertThat(illegalArgumentException.getMessage()).isEqualTo("Departure date is mandatory");
+	}
+
+	@Test
+	void customerIsMandatory() {
+		ReserveTicketRequest reserveTicketRequest = new ReserveTicketRequestBuilder()
+				.customerLogin(null)
+				.cityFrom("Berlin")
+				.cityTo("Prague")
+				.departureDate(LocalDate.now())
+				.build();
+
+		IllegalArgumentException illegalArgumentException =
+				assertThrows(IllegalArgumentException.class, () -> reserveTicketUseCase.reserveTicket(reserveTicketRequest));
+
+		assertThat(illegalArgumentException.getMessage()).isEqualTo("Customer login is mandatory");
 	}
 
 	@Test

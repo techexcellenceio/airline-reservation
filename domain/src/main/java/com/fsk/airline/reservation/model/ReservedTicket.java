@@ -11,6 +11,7 @@ public class ReservedTicket {
 	private final LocalDate departureDate;
 
 	public ReservedTicket(String customerLogin, City from, City to, LocalDate departureDate) {
+		checkCustomerIsNotEmpty(customerLogin);
 		checkDestinationAndDepartureAreNotTheSame(from, to);
 		checkDepartureDateIsPresent(departureDate);
 		this.ticketNumber = TicketNumber.generate();
@@ -18,6 +19,12 @@ public class ReservedTicket {
 		this.from = from;
 		this.to = to;
 		this.departureDate = departureDate;
+	}
+
+	private void checkCustomerIsNotEmpty(String customerLogin) {
+		if (customerLogin == null || customerLogin.equals("")) {
+			throw new IllegalArgumentException("Customer login is mandatory");
+		}
 	}
 
 	private void checkDestinationAndDepartureAreNotTheSame(City from, City to) {
