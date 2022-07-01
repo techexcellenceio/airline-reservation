@@ -7,14 +7,16 @@ import com.fsk.airline.reservation.model.City;
 import com.fsk.airline.reservation.model.ReservedTicket;
 import com.fsk.airline.reservation.model.TicketNumber;
 import com.fsk.airline.reservation.spi.Cities;
+import com.fsk.airline.reservation.spi.EventConsumer;
 import com.fsk.airline.reservation.spi.ReservedTickets;
 
 import java.util.Optional;
 
-public class ReservationService implements ReserveTicketUseCase, SearchReservedTicketUseCase {
+public class ReservationService implements ReserveTicketUseCase, SearchReservedTicketUseCase, EventPublisher<ReservedTicket> {
 
 	private final ReservedTickets reservedTickets;
 	private final Cities cities;
+	private final EventsBus<ReservedTicket> eventsBus = new EventsBus<>();
 
 	public ReservationService(ReservedTickets reservedTickets, Cities cities) {
 		this.reservedTickets = reservedTickets;
@@ -28,6 +30,7 @@ public class ReservationService implements ReserveTicketUseCase, SearchReservedT
 
 		ReservedTicket reservedTicket = new ReservedTicket(request.getCustomerLogin(), cityFrom, cityTo, request.getDepartureDate());
 		reservedTickets.save(reservedTicket);
+		publish(reservedTicket);
 		return reservedTicket;
 	}
 
@@ -39,5 +42,13 @@ public class ReservationService implements ReserveTicketUseCase, SearchReservedT
 	public Optional<ReservedTicket> findReservedTicket(String customerLogin, TicketNumber ticketNbr) {
 
 		return reservedTickets.findOne(customerLogin, ticketNbr);
+	}
+
+	public void subscribe(EventConsumer<ReservedTicket> eventConsumer) {
+		eventsBus.addConsumer(eventConsumer);
+	}
+
+	public void publish(ReservedTicket reservedTicket) {
+		eventsBus.publishEvent(reservedTicket);
 	}
 }

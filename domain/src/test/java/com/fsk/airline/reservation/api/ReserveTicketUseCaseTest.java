@@ -8,6 +8,7 @@ import com.fsk.airline.reservation.service.ReservationService;
 import com.fsk.airline.reservation.spi.Cities;
 import com.fsk.airline.reservation.spi.ReservedTickets;
 import com.fsk.airline.reservation.spi.stub.CitiesInMemory;
+import com.fsk.airline.reservation.spi.stub.EventConsumerInMemory;
 import com.fsk.airline.reservation.spi.stub.ReservedTicketsInMemory;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -24,7 +25,8 @@ class ReserveTicketUseCaseTest {
 
 	private final ReservedTickets reservedTickets = new ReservedTicketsInMemory();
 	private final Cities cities = new CitiesInMemory();
-	private final ReserveTicketUseCase reserveTicketUseCase = new ReservationService(reservedTickets, cities);
+	private final ReservationService reservationService = new ReservationService(reservedTickets, cities);
+	private final ReserveTicketUseCase reserveTicketUseCase = reservationService;
 
 	@Test
 	void reserveTicketFromParisToNewYork() {
@@ -205,6 +207,25 @@ class ReserveTicketUseCaseTest {
 		);
 	}
 
+	@Test
+	void anEventIsSentOnReservation() {
+		EventConsumerInMemory<ReservedTicket> eventConsumer1 = new EventConsumerInMemory<>();
+		EventConsumerInMemory<ReservedTicket> eventConsumer2 = new EventConsumerInMemory<>();
+		reservationService.subscribe(eventConsumer1);
+		reservationService.subscribe(eventConsumer2);
+
+		ReserveTicketRequest reserveTicketRequest = new ReserveTicketRequestBuilder()
+				.customerLogin("aCustomer")
+				.cityFrom("Paris")
+				.cityTo("New York")
+				.build();
+		ReservedTicket reservedTicket = reserveTicketUseCase.reserveTicket(reserveTicketRequest);
+
+		assertThat(eventConsumer1.getConsumedEvents()).hasSize(1);
+		assertThat(eventConsumer1.getConsumedEvents().get(0)).isEqualTo(reservedTicket);
+		assertThat(eventConsumer2.getConsumedEvents()).hasSize(1);
+		assertThat(eventConsumer2.getConsumedEvents().get(0)).isEqualTo(reservedTicket);
+	}
 
 
 }
