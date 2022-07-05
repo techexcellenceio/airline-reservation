@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -31,6 +32,8 @@ class RabbitMqMessagingIT {
 	private MockMvc mockMvc;
 	@Autowired
 	private ObjectMapper objectMapper;
+	@Autowired
+	private Environment environment;
 
 	public static final String CITY_FROM = "Paris";
 	public static final String CITY_TO = "New York";
@@ -40,8 +43,9 @@ class RabbitMqMessagingIT {
 	@Test
 	void test() throws Exception {
 		String ticketNumber = reserveAndGetTicketNumber();
+		String rabbitMqQueueName = environment.getRequiredProperty("messaging.queue.name");
 
-		ReservedTicketMqMessage message = rabbitTemplate.receiveAndConvert("myqueue", new ParameterizedTypeReference<>() {});
+		ReservedTicketMqMessage message = rabbitTemplate.receiveAndConvert(rabbitMqQueueName, new ParameterizedTypeReference<>() {});
 		assertThat(message).isNotNull();
 		assertThat(message.ticketNumber()).isEqualTo(ticketNumber);
 		assertThat(message.cityFrom()).isEqualTo(CITY_FROM);
