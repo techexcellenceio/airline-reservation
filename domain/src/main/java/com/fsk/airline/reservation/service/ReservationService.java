@@ -3,6 +3,7 @@ package com.fsk.airline.reservation.service;
 import com.fsk.airline.reservation.api.ReserveTicketUseCase;
 import com.fsk.airline.reservation.api.SearchReservedTicketUseCase;
 import com.fsk.airline.reservation.command.ReserveTicketRequest;
+import com.fsk.airline.reservation.hexarch.DomainService;
 import com.fsk.airline.reservation.model.City;
 import com.fsk.airline.reservation.model.ReservedTicket;
 import com.fsk.airline.reservation.model.TicketNumber;
@@ -12,6 +13,7 @@ import com.fsk.airline.reservation.spi.ReservedTickets;
 
 import java.util.Optional;
 
+@DomainService
 public class ReservationService implements ReserveTicketUseCase, SearchReservedTicketUseCase, EventPublisher<ReservedTicket> {
 
 	private final ReservedTickets reservedTickets;

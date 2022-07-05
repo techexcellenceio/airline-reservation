@@ -1,6 +1,7 @@
 package com.fsk.airline.reservation.service;
 
 import com.fsk.airline.reservation.api.GetReservedTicketPriceUseCase;
+import com.fsk.airline.reservation.hexarch.DomainService;
 import com.fsk.airline.reservation.model.ReservedTicket;
 import com.fsk.airline.reservation.model.ReservedTicketPrice;
 import com.fsk.airline.reservation.model.ReservedTicketPriceBuilder;
@@ -10,6 +11,7 @@ import com.fsk.airline.reservation.spi.ReservedTickets;
 
 import java.math.BigDecimal;
 
+@DomainService
 public class ReservedTicketPriceService implements GetReservedTicketPriceUseCase {
 
 	private final ReservedTickets reservedTickets;

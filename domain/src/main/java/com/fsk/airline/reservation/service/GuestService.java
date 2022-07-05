@@ -1,10 +1,12 @@
 package com.fsk.airline.reservation.service;
 
 import com.fsk.airline.reservation.api.AddGuestSeatUseCase;
+import com.fsk.airline.reservation.hexarch.DomainService;
 import com.fsk.airline.reservation.model.TicketNumber;
 import com.fsk.airline.reservation.spi.Guests;
 import com.fsk.airline.reservation.spi.ReservedTickets;
 
+@DomainService
 public class GuestService implements AddGuestSeatUseCase {
 
 	private final ReservedTickets reservedTickets;
