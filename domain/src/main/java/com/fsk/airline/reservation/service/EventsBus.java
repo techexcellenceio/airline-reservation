@@ -5,7 +5,7 @@ import com.fsk.airline.reservation.spi.EventConsumer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EventsBus<T> {
+class EventsBus<T> {
 
 	private final List<EventConsumer<T>> eventConsumers = new ArrayList<>();
 
