@@ -8,8 +8,12 @@ import com.fsk.airline.reservation.spi.stub.GuestsInMemory;
 import com.fsk.airline.reservation.spi.stub.ReservedTicketsInMemory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
+
+import static com.fsk.airline.reservation.configuration.SpringProfiles.STUBS;
 
 @Configuration
+@Profile(STUBS)
 public class ServiceProviderStubsConfiguration {
 
 	@Bean
