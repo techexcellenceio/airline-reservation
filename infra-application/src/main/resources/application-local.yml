@@ -1,0 +1,25 @@
+messaging:
+  host: localhost
+  port: 5672
+  queue:
+    name: rabbitMqQueue
+
+application:
+  base-package:
+    scan: com.fsk.airline.reservation.app,com.fsk.airline.reservation.persistence
+  stubs:
+    active: true
+  test-data:
+    generate: true
+
+spring:
+  h2:
+    console:
+      enabled: true
+  datasource:
+    url: jdbc:h2:mem:embedded
+    username: admin
+    password: pwd
+  jpa:
+    show-sql: true
+    generate-ddl: true
