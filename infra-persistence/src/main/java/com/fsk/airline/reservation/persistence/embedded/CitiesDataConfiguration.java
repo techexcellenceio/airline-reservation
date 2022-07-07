@@ -1,4 +1,4 @@
-package com.fsk.airline.reservation.configuration.embedded;
+package com.fsk.airline.reservation.persistence.embedded;
 
 import com.fsk.airline.reservation.persistence.entity.CityJpaEntity;
 import com.fsk.airline.reservation.persistence.repository.CitiesJpaRepository;
