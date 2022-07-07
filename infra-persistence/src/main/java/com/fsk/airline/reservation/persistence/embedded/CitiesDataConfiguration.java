@@ -4,9 +4,11 @@ import com.fsk.airline.reservation.persistence.entity.CityJpaEntity;
 import com.fsk.airline.reservation.persistence.repository.CitiesJpaRepository;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 @Component
+@ConditionalOnProperty(value = "application.test-data.generate", havingValue = "true")
 public class CitiesDataConfiguration implements ApplicationRunner {
 
 	private final CitiesJpaRepository citiesJpaRepository;

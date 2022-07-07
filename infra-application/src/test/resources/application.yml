@@ -3,3 +3,7 @@ messaging:
   port: 5672
   queue:
     name: rabbitMqQueue
+
+spring:
+  jpa:
+    open-in-view: false

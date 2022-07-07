@@ -1,0 +1,11 @@
+application:
+  base-package:
+    scan: com.fsk.airline.reservation.app,com.fsk.airline.reservation.persistence
+  stubs:
+    active: false
+  test-data:
+    generate: true
+
+spring:
+  jpa:
+    show-sql: true
