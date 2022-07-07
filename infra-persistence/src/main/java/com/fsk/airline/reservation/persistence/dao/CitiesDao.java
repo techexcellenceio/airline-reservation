@@ -1,9 +1,9 @@
 package com.fsk.airline.reservation.persistence.dao;
 
-import com.fsk.airline.reservation.model.City;
+import com.fsk.airline.reservation.domain.model.City;
+import com.fsk.airline.reservation.domain.spi.Cities;
 import com.fsk.airline.reservation.persistence.entity.CityJpaEntity;
 import com.fsk.airline.reservation.persistence.repository.CitiesJpaRepository;
-import com.fsk.airline.reservation.spi.Cities;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;

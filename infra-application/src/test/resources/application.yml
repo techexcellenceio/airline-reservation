@@ -1,6 +1,8 @@
 spring:
   profiles:
-    default: stubs
+    active: stubs
+  jpa:
+    show-sql: true
 
 messaging:
   host: localhost

@@ -1,15 +1,16 @@
 package com.fsk.airline.reservation.api;
 
-import com.fsk.airline.reservation.command.ReserveTicketRequest;
-import com.fsk.airline.reservation.command.ReserveTicketRequestBuilder;
-import com.fsk.airline.reservation.model.CityName;
-import com.fsk.airline.reservation.model.ReservedTicket;
-import com.fsk.airline.reservation.service.ReservationService;
-import com.fsk.airline.reservation.spi.Cities;
-import com.fsk.airline.reservation.spi.ReservedTickets;
-import com.fsk.airline.reservation.spi.stub.CitiesInMemory;
-import com.fsk.airline.reservation.spi.stub.EventConsumerInMemory;
-import com.fsk.airline.reservation.spi.stub.ReservedTicketsInMemory;
+import com.fsk.airline.reservation.domain.api.ReserveTicketUseCase;
+import com.fsk.airline.reservation.domain.command.ReserveTicketRequest;
+import com.fsk.airline.reservation.domain.command.ReserveTicketRequestBuilder;
+import com.fsk.airline.reservation.domain.model.CityName;
+import com.fsk.airline.reservation.domain.model.ReservedTicket;
+import com.fsk.airline.reservation.domain.service.ReservationService;
+import com.fsk.airline.reservation.domain.spi.Cities;
+import com.fsk.airline.reservation.domain.spi.ReservedTickets;
+import com.fsk.airline.reservation.domain.spi.stub.CitiesInMemory;
+import com.fsk.airline.reservation.domain.spi.stub.EventConsumerInMemory;
+import com.fsk.airline.reservation.domain.spi.stub.ReservedTicketsInMemory;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
