@@ -9,4 +9,5 @@ application:
     host: localhost
     port: 5672
     queue:
-      name: rabbitMqQueue
+      reserved-ticket:
+        name: rabbitMqQueue

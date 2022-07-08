@@ -40,7 +40,7 @@ public class RabbitConfiguration {
 
 	@Bean
 	public Queue myQueue(Environment environment) {
-		String queueName = environment.getRequiredProperty("application.messaging.queue.name");
+		String queueName = environment.getRequiredProperty("application.messaging.queue.reserved-ticket.name");
 		return new Queue(queueName);
 	}
 }
