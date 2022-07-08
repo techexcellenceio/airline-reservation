@@ -1,6 +1,8 @@
 spring:
   jpa:
     open-in-view: false
+  profiles:
+    default: test-jpa-and-stub
 
 application:
   messaging:
