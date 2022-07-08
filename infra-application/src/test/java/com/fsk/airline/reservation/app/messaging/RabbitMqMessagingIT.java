@@ -5,7 +5,6 @@ import com.fsk.airline.reservation.app.controller.ReserveTicketDto;
 import com.fsk.airline.reservation.app.controller.ReservedTicketNumberDto;
 import com.fsk.airline.reservation.app.service.ReservedTicketMqMessage;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -23,7 +22,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@ExtendWith(QpidEmbedded.class)
 class RabbitMqMessagingIT {
 
 	@Autowired

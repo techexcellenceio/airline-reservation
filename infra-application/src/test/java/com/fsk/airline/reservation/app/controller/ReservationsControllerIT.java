@@ -1,9 +1,7 @@
 package com.fsk.airline.reservation.app.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fsk.airline.reservation.app.messaging.QpidEmbedded;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -24,7 +22,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@ExtendWith(QpidEmbedded.class)
 class ReservationsControllerIT {
 
 	@Autowired

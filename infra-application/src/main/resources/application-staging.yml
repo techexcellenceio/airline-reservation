@@ -11,6 +11,9 @@ application:
     active: true
   test-data:
     generate: false
+  messaging:
+    broker:
+      embedded: false
 
 spring:
   datasource:

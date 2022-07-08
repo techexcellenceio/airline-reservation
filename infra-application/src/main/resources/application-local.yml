@@ -11,6 +11,9 @@ application:
     active: true
   test-data:
     generate: true
+  messaging:
+    broker:
+      embedded: true
 
 spring:
   h2:
@@ -23,3 +26,4 @@ spring:
   jpa:
     show-sql: true
     generate-ddl: true
+
