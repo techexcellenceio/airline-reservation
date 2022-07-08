@@ -41,7 +41,7 @@ class RabbitMqMessagingIT {
 	@Test
 	void test() throws Exception {
 		String ticketNumber = reserveAndGetTicketNumber();
-		String rabbitMqQueueName = environment.getRequiredProperty("messaging.queue.name");
+		String rabbitMqQueueName = environment.getRequiredProperty("application.messaging.queue.name");
 
 		ReservedTicketMqMessage message = rabbitTemplate.receiveAndConvert(rabbitMqQueueName, new ParameterizedTypeReference<>() {});
 		assertThat(message).isNotNull();

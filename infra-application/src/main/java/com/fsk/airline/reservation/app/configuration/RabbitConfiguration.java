@@ -16,8 +16,8 @@ public class RabbitConfiguration {
 
 	@Bean
 	public ConnectionFactory connectionFactory(Environment environment) {
-		String hostname = environment.getRequiredProperty("messaging.host");
-		int port = environment.getRequiredProperty("messaging.port", Integer.class);
+		String hostname = environment.getRequiredProperty("application.messaging.host");
+		int port = environment.getRequiredProperty("application.messaging.port", Integer.class);
 		return new CachingConnectionFactory(hostname, port);
 	}
 
@@ -40,7 +40,7 @@ public class RabbitConfiguration {
 
 	@Bean
 	public Queue myQueue(Environment environment) {
-		String queueName = environment.getRequiredProperty("messaging.queue.name");
+		String queueName = environment.getRequiredProperty("application.messaging.queue.name");
 		return new Queue(queueName);
 	}
 }
