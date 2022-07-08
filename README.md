@@ -20,6 +20,15 @@
 
 - Evaluation criteria: When viewing your projects, I will evaluate the following: (1) Your solution design - clean design, clean code, (3) running SonarLint, (4) Running unit tests with code coverage and mutation testing
 
+# Environment variables
+
+${RABBIT_MQ_HOST}
+${RABBIT_MQ_PORT}
+${RABBIT_MQ_RESERVED_TICKET_QUEUE}
+${POSTGRES_URL}
+${POSTGRES_USER}
+${POSTGRES_PASSWORD}
+
 ## Tools
 
 ### Pitest

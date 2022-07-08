@@ -8,17 +8,19 @@ application:
   messaging:
     broker:
       embedded: false
-    host: localhost
-    port: 5672
+    host: ${RABBIT_MQ_HOST}
+    port: ${RABBIT_MQ_PORT}
     queue:
       reserved-ticket:
-        name: rabbitMqQueue
+        name: ${RABBIT_MQ_RESERVED_TICKET_QUEUE}
 
 spring:
   datasource:
-    url: jdbc:mysql:blablabla
-    username: admin
-    password: pwd
+    url: ${POSTGRES_URL}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+    driver-class-name: org.postgresql.Driver
   jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL82Dialect
     show-sql: false
     generate-ddl: false
