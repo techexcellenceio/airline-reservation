@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.Optional;
 
@@ -36,6 +37,7 @@ public class ApplicationService {
 		this.addGuestSeatUseCase = addGuestSeatUseCase;
 	}
 
+	@Transactional
 	public ReservedTicketNumberDto reserveTicket(String customerLogin, ReserveTicketDto reserveTicketDto) {
 		ReserveTicketRequest reserveTicketRequest = new ReserveTicketRequestBuilder()
 				.customerLogin(customerLogin)
@@ -50,6 +52,7 @@ public class ApplicationService {
 		return reservedTicketDto;
 	}
 
+	@Transactional
 	public ReservedTicketDto getReservedTicket(String customerLogin, String ticketNumber) {
 		Optional<ReservedTicket> optionalReservedTicket = searchReservedTicketUseCase.findReservedTicket(customerLogin, TicketNumber.of(ticketNumber));
 
@@ -73,6 +76,7 @@ public class ApplicationService {
 		return reservedTicketDto;
 	}
 
+	@Transactional
 	public void addGuestToReservedTicket(String customerLogin, String ticketNumber) {
 		addGuestSeatUseCase.addGuestToReservation(customerLogin, TicketNumber.of(ticketNumber));
 	}
