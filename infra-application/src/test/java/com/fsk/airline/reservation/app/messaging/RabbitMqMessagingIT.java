@@ -4,7 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fsk.airline.reservation.app.controller.ReserveTicketDto;
 import com.fsk.airline.reservation.app.controller.ReservedTicketNumberDto;
 import com.fsk.airline.reservation.app.service.ReservedTicketMqMessage;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -27,6 +29,8 @@ class RabbitMqMessagingIT {
 	@Autowired
 	private RabbitTemplate rabbitTemplate;
 	@Autowired
+	private RabbitAdmin rabbitAdmin;
+	@Autowired
 	private MockMvc mockMvc;
 	@Autowired
 	private ObjectMapper objectMapper;
@@ -38,10 +42,15 @@ class RabbitMqMessagingIT {
 	public static final LocalDate DEPARTURE_DATE = LocalDate.now();
 	public static final String CUSTOMER = "aCustomer";
 
+	@BeforeEach
+	public void purgeReservedTicketQueue() {
+		String rabbitMqQueueName = environment.getRequiredProperty("application.messaging.queue.reserved-ticket.name");
+		rabbitAdmin.purgeQueue(rabbitMqQueueName, true);
+	}
 	@Test
 	void test() throws Exception {
-		String ticketNumber = reserveAndGetTicketNumber();
 		String rabbitMqQueueName = environment.getRequiredProperty("application.messaging.queue.reserved-ticket.name");
+		String ticketNumber = reserveAndGetTicketNumber();
 
 		ReservedTicketMqMessage message = rabbitTemplate.receiveAndConvert(rabbitMqQueueName, new ParameterizedTypeReference<>() {});
 		assertThat(message).isNotNull();
