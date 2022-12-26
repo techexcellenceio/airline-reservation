@@ -171,3 +171,7 @@ For example :
 - test profile "test-jpa-and-stub" scans two packages : `com.fsk.airline.reservation.app,com.fsk.airline.reservation.persistence`
 
 That means that jpa services could be deactivated and replaced by another technology storage.
+
+## Contributors
+
+- [Stanislas Klukowski](stanKluk)
