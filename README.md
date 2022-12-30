@@ -174,4 +174,4 @@ That means that jpa services could be deactivated and replaced by another techno
 
 ## Contributors
 
-- Stanislas Klukowski - [stanKluk](https://github.com/stanKluk)
+- [Stanislas Klukowski](https://www.linkedin.com/in/stanislas-klukowski-96431248/) ([stanKluk](https://github.com/stanKluk))
