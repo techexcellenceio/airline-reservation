@@ -175,3 +175,4 @@ That means that jpa services could be deactivated and replaced by another techno
 ## Contributors
 
 - [Stanislas Klukowski](https://www.linkedin.com/in/stanislas-klukowski-96431248/) ([stanKluk](https://github.com/stanKluk))
+- [Valentina Cupać](https://www.linkedin.com/in/valentinacupac/) ([valentinacupac](https://github.com/valentinacupac))
